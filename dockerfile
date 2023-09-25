@@ -1,5 +1,5 @@
 # Use the official Python image as a parent image
-FROM python:3
+FROM python:3.8
 
 # Copy the local Python script to the container
 COPY hello.py /app/hello.py
