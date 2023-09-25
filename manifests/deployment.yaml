@@ -5,7 +5,7 @@ metadata:
   labels:
     app: my-eks-pipeline-deployment
 spec:
-  replicas: 3
+  replicas: 2
   selector:
     matchLabels:
       app: my-eks-pipeline-deployment
@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: my-eks-pipeline-deployment
-          image: $REPOSITORY_URI/$REPO_NAME:$TAG
+          image: 074070141186.dkr.ecr.us-east-1.amazonaws.com/data-runner-poc:latest
           ports:
             - containerPort: 80
