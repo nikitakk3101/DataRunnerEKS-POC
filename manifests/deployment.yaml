@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: my-eks-pipeline-deployment
-          image: 074070141186.dkr.ecr.us-east-1.amazonaws.com/data-runner-poc:latest
+          image: 074070141186.dkr.ecr.us-east-1.amazonaws.com/data-runner-poc:$TAG
           ports:
             - containerPort: 80
