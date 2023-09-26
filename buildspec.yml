@@ -28,9 +28,9 @@ phases:
     commands:
       # Push Docker Image to ECR Repository
       - echo "Docker build completed on `date`"
-      - docker tag data-runner:latest 074070141186.dkr.ecr.us-east-1.amazonaws.com/data-runner-poc:latest1
+      - docker tag data-runner:latest 074070141186.dkr.ecr.us-east-1.amazonaws.com/data-runner-poc:$TAG
       - echo "Pushing the Docker image to ECR Repository"
-      - docker push 074070141186.dkr.ecr.us-east-1.amazonaws.com/data-runner-poc:latest1
+      - docker push 074070141186.dkr.ecr.us-east-1.amazonaws.com/data-runner-poc:$TAG
       - echo "Docker Push to ECR Repository Completed -  $REPOSITORY_URI:$TAG"    
       # Get AWS Credential using STS Assume Role for kubectl
       - echo "Setting Environment Variables related to AWS CLI for Kube Config Setup"          
@@ -43,8 +43,9 @@ phases:
       - echo "Update Kube Config configuration"      
       - aws eks update-kubeconfig --name eksctl-demo
       # Show time, applying manifests changes using kubectl
-      - echo "Apply changes to kube manifests"            
-      - kubectl apply -f manifests/
+      - echo "Apply changes to kube manifests"  
+      - envsubst < manifests/eployment.yaml | kubectl apply -f -
+      #- kubectl apply -f manifests/
       - echo "All done!!!! Kubernetes changes applied"           
       # Create Artifacts which we can use if we want to continue our pipeline for other stages
       - printf '[{"name":"deployment.yaml","imageUri":"%s"}]' $REPOSITORY_URI:$TAG > build.json            
